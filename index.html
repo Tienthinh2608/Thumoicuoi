@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hồ Chí Minh: Một Cuộc Đời - Một Dân Tộc</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding: 4rem 0 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: rgba(139, 0, 0, 0.75);
+    }
+
+    .timeline-item {
+      position: relative;
+      width: calc(50% - 2.5rem);
+      padding: 2rem 2.25rem;
+      border-radius: 22px;
+      background: rgba(255, 250, 245, 0.88);
+      border: 1px solid rgba(210, 180, 141, 0.65);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 500ms ease, transform 500ms ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-item:nth-child(odd) {
+      left: 0;
+    }
+
+    .timeline-item:nth-child(even) {
+      left: 50%;
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      top: 2.25rem;
+      width: 18px;
+      height: 18px;
+      background: var(--gold);
+      border: 3px solid var(--red-deep);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.55);
+    }
+
+    .timeline-item:nth-child(odd)::after {
+      right: -10px;
+    }
+
+    .timeline-item:nth-child(even)::after {
+      left: -10px;
+    }
+
+    .timeline-year {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(235, 91, 82, 0.9);
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+      margin-bottom: 1rem;
+    }
+
+    .timeline-thumb {
+      width: 100%;
+      height: 220px;
+      border-radius: 18px;
+      object-fit: cover;
+      margin-top: 1rem;
+      transition: transform 400ms ease;
+    }
+
+    .timeline-item:hover .timeline-thumb {
+      transform: scale(1.03);
+    }
+
+    /* Bento */
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-auto-rows: 220px;
+      gap: 1.25rem;
+      margin: 2rem 0;
+    }
+
+    .bento-item {
+      position: relative;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: rgba(255, 250, 245, 0.8);
+      border: 1px solid rgba(210, 180, 141, 0.6);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform 260ms ease, box-shadow 260ms ease;
+    }
+
+    .bento-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .bento-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, rgba(235, 91, 82, 0.35), rgba(242, 201, 76, 0.28));
+      opacity: 0.8;
+      mix-blend-mode: overlay;
+      transition: opacity 260ms ease;
+    }
+
+    .bento-item:hover::before {
+      opacity: 0.92;
+    }
+
+    .bento-item > div {
+      position: relative;
+      z-index: 10;
+      height: 100%;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .bento-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.45);
+      display: grid;
+      place-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .bento-icon svg {
+      width: 20px;
+      height: 20px;
+      color: rgba(255, 241, 163, 0.9);
+    }
+
+    .bento-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 0.5rem;
+    }
+
+    .bento-desc {
+      color: rgba(255, 255, 255, 0.82);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    /* Masonry gallery */
+    .masonry {
+      column-count: 2;
+      column-gap: 1rem;
+    }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 240ms ease;
+    }
+
+    .masonry-item:hover {
+      transform: translateY(-4px);
+    }
+
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      transition: transform 320ms ease;
+    }
+
+    .masonry-item:hover img {
+      transform: scale(1.03);
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(12, 12, 12, 0.9);
+      padding: 2rem;
+      z-index: 50;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 86vh;
+      border-radius: 1.25rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform 220ms ease, background 220ms ease;
+    }
+
+    .lightbox-close:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.26);
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(27, 24, 22, 0.95);
+      color: rgba(241, 232, 214, 0.88);
+      padding: 3.5rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    footer a {
+      color: rgba(255, 233, 177, 0.9);
+      text-decoration: underline;
+    }
+
+    /* responsive */
+    @media (max-width: 992px) {
+      .timeline::before {
+        left: 12px;
+      }
+
+      .timeline-item {
+        width: 100%;
+        left: 0 !important;
+        margin-left: 1.75rem;
+      }
+
+      .timeline-item::after {
+        left: -25px !important;
+      }
+
+      .masonry {
+        column-count: 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: clamp(2.4rem, 6vw, 3.2rem);
+      }
+
+      .hero-quote {
+        font-size: 1.05rem;
+      }
+
+      .bento {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50">
+    <nav class="sticky-nav w-full">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-3">
+          <div class="h-11 w-11 rounded-full bg-gradient-to-br from-amber-400 via-red-500 to-red-700 shadow-xl"></div>
+          <div>
+            <p class="text-sm font-semibold text-white">Hồ Chí Minh</p>
+            <p class="text-xs text-white/70">Một Cuộc Đời - Một Dân Tộc</p>
+          </div>
+        </div>
+        <div class="hidden items-center gap-6 text-sm font-semibold md:flex">
+          <a href="#hero" class="nav-link" data-target="hero">Hero</a>
+          <a href="#timeline" class="nav-link" data-target="timeline">Tiểu sử</a>
+          <a href="#thought" class="nav-link" data-target="thought">Tư tưởng</a>
+          <a href="#gallery" class="nav-link" data-target="gallery">Thư viện</a>
+          <a href="#footer" class="nav-link" data-target="footer">Liên hệ</a>
+        </div>
+        <button id="menuToggle" class="inline-flex items-center justify-center rounded-full bg-white/10 p-2 text-white shadow-lg ring-1 ring-white/10 transition hover:bg-white/20 md:hidden">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobileMenu" class="hidden bg-white/90 backdrop-blur-lg">
+      <div class="mx-auto max-w-6xl px-6 pb-6 pt-4">
+        <div class="flex flex-col gap-3">
+          <a href="#hero" class="nav-link block rounded-xl px-4 py-3" data-target="hero">Hero</a>
+          <a href="#timeline" class="nav-link block rounded-xl px-4 py-3" data-target="timeline">Tiểu sử</a>
+          <a href="#thought" class="nav-link block rounded-xl px-4 py-3" data-target="thought">Tư tưởng</a>
+          <a href="#gallery" class="nav-link block rounded-xl px-4 py-3" data-target="gallery">Thư viện</a>
+          <a href="#footer" class="nav-link block rounded-xl px-4 py-3" data-target="footer">Liên hệ</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Hồ Chí Minh: Một Cuộc Đời - Một Dân Tộc</h1>
+      <p class="hero-quote">"Tôi chỉ có một sự ham muốn, ham muốn tột bậc: là làm sao cho nước ta được hoàn toàn độc lập, dân ta được hoàn toàn tự do..."</p>
+      <a href="#timeline" class="scroll-indicator" data-target="timeline">
+        <span class="text-xs font-semibold tracking-widest">Khám phá</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M6 14L12 20L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section id="timeline" class="timeline px-6">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-12 text-center">
+        <h2 class="text-3xl font-bold tracking-wide text-charcoal">Tiểu sử & Hành trình</h2>
+        <p class="mt-3 max-w-2xl text-sm text-charcoal/80">
+          Một hành trình theo mốc thời gian, được thiết kế dưới dạng trục linh hoạt, đan xen để ghi nhớ những bước ngoặt quan trọng.
+        </p>
+      </div>
+
+      <div class="relative">
+        <article class="timeline-item" data-scroll>
+          <div class="timeline-year">1890</div>
+          <h3 class="text-xl font-semibold text-charcoal">Sinh ra tại Làng Sen</h3>
+          <p class="mt-3 text-sm leading-relaxed text-charcoal/85">
+            Nguyễn Sinh Cung chào đời tại xã Kim Liên, Nghệ An. Từ nhỏ đã được truyền cho tinh thần yêu nước và nhân ái.
+          </p>
+          <img
+            class="timeline-thumb"
+            src="https://images.unsplash.com/photo-1525434931-740a0b4d5475?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MTk2NjR8MHwxfGFsbHx8fHx2aWV0bmFtJTIwY2xhc3NpYyUyMGhpc3Rvcnl8ZW58MHx8fHwxNjg5OTg4MDI0&ixlib=rb-4.0.3&q=80&w=960"
+            alt="Làng Sen"
+          />
+        </article>
+
+        <article class="timeline-item" data-scroll>
+          <div class="timeline-year">1911</div>
+          <h3 class="text-xl font-semibold text-charcoal">Ra đi tìm đường cứu nước</h3>
+          <p class="mt-3 text-sm leading-relaxed text-charcoal/85">
+            Với tên Văn Ba, Người lên tàu và bắt đầu hành trình tìm hiểu thế giới bên ngoài, đặt nền móng cho tư duy cách mạng.
+          </p>
+          <img
+            class="timeline-thumb"
+            src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MTk2NjR8MHwxfGFsbHx8fHx2b2nibmFtJTIwdHJhdmVsfGVufDB8fHx8MTY4OTk4ODAxNg&ixlib=rb-4.0.3&q=80&w=960"
+            alt="Tàu biển"/>
+        </article>
+
+        <article class="timeline-item" data-scroll>
+          <div class="timeline-year">1945</div>
+          <h3 class="text-xl font-semibold text-charcoal">Tuyên ngôn Độc lập</h3>
+          <p class="mt-3 text-sm leading-relaxed text-charcoal/85">
+            Người đọc bản Tuyên ngôn Độc lập tại Quảng trường Ba Đình, khai sinh nước Việt Nam Dân chủ Cộng hòa.
+          </p>
+          <img
+            class="timeline-thumb"
+            src="https://images.unsplash.com/photo-1572626121463-a9e6d9638065?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MTk2NjR8MHwxfGFsbHx8fHx2aWV0bmFtJTIwYWRvbGVzY2FwfGVufDB8fHx8MTY4OTk4ODA0MQ&ixlib=rb-4.0.3&q=80&w=960"
+            alt="Ba Đình"/>
+        </article>
+
+        <article class="timeline-item" data-scroll>
+          <div class="timeline-year">1969</div>
+          <h3 class="text-xl font-semibold text-charcoal">Vĩnh biệt Người Cha Già</h3>
+          <p class="mt-3 text-sm leading-relaxed text-charcoal/85">
+            Hồ Chí Minh qua đời, để lại di sản tư tưởng và đạo đức tiến bộ, tiếp thêm niềm tin cho sự nghiệp xây dựng và bảo vệ Tổ quốc.
+          </p>
+          <img
+            class="timeline-thumb"
+            src="https://images.unsplash.com/photo-1542060746-1ab8cdb2f404?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MTk2NjR8MHwxfGFsbHx8fHxzdXR0ZXQlMjBiaXQgfGVufDB8fHx8MTY4OTk4ODAyMA&ixlib=rb-4.0.3&q=80&w=960"
+            alt="Lễ tang"/>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Thought / Content -->
+  <section id="thought" class="px-6 py-16">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-10 text-center">
+        <h2 class="text-3xl font-bold tracking-wide text-charcoal">Tư tưởng & Sự nghiệp</h2>
+        <p class="mt-3 max-w-3xl text-sm text-charcoal/80">
+          Khám phá các khía cạnh tư tưởng, lý thuyết và nhận định về chủ nghĩa xã hội, sự kiện lịch sử và suy ngẫm cá nhân.
+        </p>
+      </div>
+
+      <div class="bento">
+        <div class="bento-item" data-title="Chủ nghĩa xã hội là gì?">
+          <div>
+            <div class="bento-icon">★</div>
+            <h3 class="bento-title">Chủ nghĩa xã hội là gì?</h3>
+            <p class="bento-desc">
+              Chủ nghĩa xã hội là hệ thống lý luận chính trị - kinh tế nhấn mạnh quyền sở hữu xã hội đối với tư liệu sản xuất, và mục tiêu xây dựng xã hội công bằng, không giai cấp.
+            </p>
+          </div>
+        </div>
+
+        <div class="bento-item" data-title="Khái niệm & vị trí">
+          <div>
+            <div class="bento-icon">📚</div>
+            <h3 class="bento-title">Khái niệm trong lý thuyết</h3>
+            <p class="bento-desc">
+              Trong lý thuyết hình thái kinh tế - xã hội, chủ nghĩa xã hội là giai đoạn chuyển tiếp giữa chủ nghĩa tư bản và chủ nghĩa cộng sản, khi lực lượng sản xuất phát triển cao và quyền lực nhà nước do giai cấp công nhân nắm giữ.
+            </p>
+          </div>
+        </div>
+
+        <div class="bento-item" data-title="Quá trình lịch sử tự nhiên">
+          <div>
+            <div class="bento-icon">⏳</div>
+            <h3 class="bento-title">Quá trình lịch sử tự nhiên</h3>
+            <p class="bento-desc">
+              Theo quan điểm Marxist, lịch sử là quá trình phát triển tự nhiên của xã hội, do mâu thuẫn giai cấp và biến đổi vật chất thúc đẩy, đưa đến thay thế hình thái sản xuất cũ.
+            </p>
+          </div>
+        </div>
+
+        <div class="bento-item" data-title="Điều kiện ra đời">
+          <div>
+            <div class="bento-icon">🛠️</div>
+            <h3 class="bento-title">Điều kiện ra đời</h3>
+            <p class="bento-desc">
+              Chủ nghĩa xã hội xuất hiện khi có đủ điều kiện kinh tế và chính trị - xã hội để tạo nền tảng cho quyền lực công nhân và sự quản lý tập thể đối với sản xuất.
+            </p>
+          </div>
+        </div>
+
+        <div class="bento-item" data-title="Điều kiện kinh tế">
+          <div>
+            <div class="bento-icon">🏭</div>
+            <h3 class="bento-title">Điều kiện kinh tế</h3>
+            <p class="bento-desc">
+              Một xã hội đạt mức phát triển sản xuất đủ cao, với khả năng sản xuất dư thừa và kỹ thuật công nghiệp hiện đại, để có thể đảm bảo mọi người dân đều được hưởng lợi.
+            </p>
+          </div>
+        </div>
+
+        <div class="bento-item" data-title="Điều kiện chính trị xã hội">
+          <div>
+            <div class="bento-icon">🏛️</div>
+            <h3 class="bento-title">Điều kiện chính trị - xã hội</h3>
+            <p class="bento-desc">
+              Đòi hỏi sự đoàn kết của quần chúng, tổ chức chính trị tiên tiến, và yếu tố văn hóa - giáo dục để củng cố niềm tin vào con đường tiến lên xã hội chủ nghĩa.
+            </p>
+          </div>
+        </div>
+
+        <div class="bento-item" data-title="Đặc trưng bản chất">
+          <div>
+            <div class="bento-icon">🌿</div>
+            <h3 class="bento-title">Đặc trưng bản chất</h3>
+            <p class="bento-desc">
+              Chủ nghĩa xã hội đề cao công bằng, quyền lợi lao động, xóa bỏ bóc lột, và thúc đẩy phát triển toàn diện con người cùng xã hội.
+            </p>
+          </div>
+        </div>
+
+        <div class="bento-item" data-title="Sụp đổ Đông Âu">
+          <div>
+            <div class="bento-icon">⚖️</div>
+            <h3 class="bento-title">Sự kiện Liên Xô - Đông Âu</h3>
+            <p class="bento-desc">
+              Năm 1989-1991, Liên Xô và nhiều nước Đông Âu trải qua biến cố chính trị lớn: hệ thống cộng sản sụp đổ, mở đường cho chuyển đổi sang kinh tế thị trường.
+            </p>
+          </div>
+        </div>
+
+        <div class="bento-item" data-title="Ý kiến đánh giá">
+          <div>
+            <div class="bento-icon">💬</div>
+            <h3 class="bento-title">Ý kiến về sự sụp đổ</h3>
+            <p class="bento-desc">
+              Có ý kiến cho rằng đó là thất bại của chủ nghĩa xã hội; tuy nhiên, cần phân biệt giữa khái niệm lý tưởng và các cách thức triển khai cụ thể.
+            </p>
+          </div>
+        </div>
+
+        <div class="bento-item" data-title="Đánh giá cá nhân">
+          <div>
+            <div class="bento-icon">🧠</div>
+            <h3 class="bento-title">Quan điểm cá nhân</h3>
+            <p class="bento-desc">
+              Tôi cho rằng sự tan rã không đồng nghĩa với tiêu vong lý tưởng; nó phản ánh những khủng hoảng nội tại, sai lầm quản trị và biến đổi lịch sử.
+            </p>
+          </div>
+        </div>
+
+        <div class="bento-item" data-title="Luận giải ý kiến">
+          <div>
+            <div class="bento-icon">✍️</div>
+            <h3 class="bento-title">Luận giải</h3>
+            <p class="bento-desc">
+              Để đánh giá, cần nhìn nhận cả mặt tiến bộ và hạn chế: xã hội chủ nghĩa hướng tới bình đẳng, nhưng đòi hỏi cơ chế minh bạch, dân chủ và liên tục cập nhật.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="px-6 pb-16">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-10 text-center">
+        <h2 class="text-3xl font-bold tracking-wide text-charcoal">Thư viện hình ảnh</h2>
+        <p class="mt-3 max-w-2xl text-sm text-charcoal/80">
+          Hình ảnh lịch sử được sắp xếp theo kiểu Masonry độc đáo. Nhấp vào ảnh để xem phóng to.
+        </p>
+      </div>
+
+      <div class="masonry">
+        <div class="masonry-item">
+          <img src="https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MTk2NjR8MHwxfGFsbHx8fHx2aWV0bmFtJTIwaGlzdG9yeXxlbnwwfHx8fDE2ODk5ODgxNzY&ixlib=rb-4.0.3&q=80&w=1200" alt="Hình 1" data-full="https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?auto=format&fit=crop&w=1600&q=80" />
+        </div>
+        <div class="masonry-item">
+          <img src="https://images.unsplash.com/photo-1597223563679-46c0b014cfe6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MTk2NjR8MHwxfGFsbHx8fHx2aWV0bmFtJTIwYW5jZXN0cnl8ZW58MHx8fHwxNjg5OTg4MTk0&ixlib=rb-4.0.3&q=80&w=1200" alt="Hình 2" data-full="https://images.unsplash.com/photo-1597223563679-46c0b014cfe6?auto=format&fit=crop&w=1600&q=80" />
+        </div>
+        <div class="masonry-item">
+          <img src="https://images.unsplash.com/photo-1587442502515-72e9e79c619e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MTk2NjR8MHwxfGFsbHx8fHx2aWV0bmFtJTIwZHVzdGljJTIwbWFuZWFyfGVufDB8fHx8MTY4OTk4ODE5OQ&ixlib=rb-4.0.3&q=80&w=1200" alt="Hình 3" data-full="https://images.unsplash.com/photo-1587442502515-72e9e79c619e?auto=format&fit=crop&w=1600&q=80" />
+        </div>
+        <div class="masonry-item">
+          <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MTk2NjR8MHwxfGFsbHx8fHx2aWV0bmFtJTIwdGV4dHxlbnwwfHx8fDE2ODk5ODgyMDQ&ixlib=rb-4.0.3&q=80&w=1200" alt="Hình 4" data-full="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=1600&q=80" />
+        </div>
+        <div class="masonry-item">
+          <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MTk2NjR8MHwxfGFsbHx8fHx2aWV0bmFtJTIwY3JlYXRpdmV8ZW58MHx8fHwxNjg5OTg4MjIy&ixlib=rb-4.0.3&q=80&w=1200" alt="Hình 5" data-full="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80" />
+        </div>
+        <div class="masonry-item">
+          <img src="https://images.unsplash.com/photo-1549887538-9f25f6e3b2bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MTk2NjR8MHwxfGFsbHx8fHx2aWV0bmFtJTIwYm9va3xlbnwwfHx8fDE2ODk5ODgyMzA&ixlib=rb-4.0.3&q=80&w=1200" alt="Hình 6" data-full="https://images.unsplash.com/photo-1549887538-9f25f6e3b2bf?auto=format&fit=crop&w=1600&q=80" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="closeLightbox" aria-label="Đóng">
+      ✕
+    </button>
+    <img id="lightboxImage" src="" alt="" />
+  </div>
+
+  <footer id="footer" class="text-center">
+    <div class="mx-auto max-w-6xl px-6">
+      <h3 class="text-lg font-semibold text-white">Tri ân và tiếp bước</h3>
+      <p class="mt-3 max-w-2xl mx-auto text-sm text-white/70">
+        Cảm ơn bạn đã tham gia hành trình kể chuyện lịch sử. Hy vọng kiến thức và cảm hứng được truyền tải sẽ là động lực xây dựng tương lai.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4 text-white/60">
+        <a href="#" class="hover:text-white">Facebook</a>
+        <a href="#" class="hover:text-white">YouTube</a>
+        <a href="#" class="hover:text-white">Email</a>
+      </div>
+      <p class="mt-10 text-xs text-white/50">© 2026 - Thiết kế bởi Frontend Developer | Thiết kế giao diện hiện đại</p>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.querySelector('.sticky-nav');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuToggle = document.getElementById('menuToggle');
+
+    const toggleMobile = () => {
+      mobileMenu.classList.toggle('hidden');
+    };
+
+    menuToggle.addEventListener('click', toggleMobile);
+
+    navLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const target = e.currentTarget.getAttribute('href');
+        if (target && target.startsWith('#')) {
+          e.preventDefault();
+          document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
+        }
+        if (!mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    });
+
+    const setActiveLink = () => {
+      let index = sections.length;
+      while (--index && window.scrollY + 120 < sections[index].offsetTop) {}
+      navLinks.forEach((link) => link.classList.remove('active'));
+      const activeLink = document.querySelector(`.nav-link[data-target="${sections[index].id}"]`);
+      if (activeLink) activeLink.classList.add('active');
+    };
+
+    const onScroll = () => {
+      if (window.scrollY > 60) {
+        header.classList.add('solid');
+      } else {
+        header.classList.remove('solid');
+      }
+      setActiveLink();
+    };
+
+    window.addEventListener('scroll', onScroll);
+    setActiveLink();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    document.querySelectorAll('[data-scroll]').forEach((el) => observer.observe(el));
+
+    // Masonry lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const closeLightbox = document.getElementById('closeLightbox');
+
+    document.querySelectorAll('.masonry-item img').forEach((img) => {
+      img.addEventListener('click', () => {
+        lightbox.classList.add('open');
+        lightboxImage.src = img.dataset.full || img.src;
+        lightboxImage.alt = img.alt;
+      });
+    });
+
+    closeLightbox.addEventListener('click', () => {
+      lightbox.classList.remove('open');
+      lightboxImage.src = '';
+    });
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) {
+        lightbox.classList.remove('open');
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+        lightbox.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>
