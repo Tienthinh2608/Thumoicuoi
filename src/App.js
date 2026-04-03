@@ -7,7 +7,7 @@ import './App.css';
 const VENUE_MAP_QUERY =
   'Số nhà 123, Khu Phố Kim Bảng, Phường Phù Khê, Tỉnh Bắc Ninh';
 
-/** 8 ảnh album trong `public/Anh/` — thứ tự hiển thị xáo ngẫu nhiên mỗi lần tải trang */
+/** 8 ảnh album trong `public/Anh/` — thứ tự hiển thị cố định 1..8 */
 const WEDDING_ALBUM_SRCS = Array.from({ length: 8 }, (_, i) => {
   const n = i + 1;
   return `${process.env.PUBLIC_URL}/Anh/Anhcuoi${n}.jpg`;
@@ -25,8 +25,8 @@ function shuffleInPlace(arr) {
 /** Chỉnh nội dung thiệp tại đây */
 const INVITE = {
   coupleTitle: 'Lan Anh & Tự Chinh',
-  /** Ảnh hero (file gốc `Anh/1..jpg` — bản phục vụ web: `public/Anh/1.jpg`) */
-  heroPhoto: `${process.env.PUBLIC_URL}/Anh/1.jpg`,
+  /** Ảnh hero (file gốc `Anh/Anhcuoicung.jpg`) */
+  heroPhoto: `${process.env.PUBLIC_URL}/Anh/Anhcuoicung.jpg`,
   heroTime: '12',
   heroDay: '04',
   heroMonth: '04',
@@ -145,17 +145,29 @@ export default function App() {
   const [rsvpOpen, setRsvpOpen] = useState(false);
   const [giftOpen, setGiftOpen] = useState(false);
   const [rsvpChoice, setRsvpChoice] = useState(null);
-  const [albumPhotos] = useState(() => shuffleInPlace(WEDDING_ALBUM_SRCS));
+  const [albumPhotos] = useState(() => WEDDING_ALBUM_SRCS);
+
+  const prefetchAlbumPhotos = useCallback(() => {
+    albumPhotos.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, [albumPhotos]);
+
+  useEffect(() => {
+    prefetchAlbumPhotos();
+  }, [prefetchAlbumPhotos]);
 
   const toggleMusic = useCallback(() => {
     const el = audioRef.current;
     if (!el) return;
     if (el.paused) {
+      prefetchAlbumPhotos();
       playAudioSafe(el);
     } else {
       el.pause();
     }
-  }, []);
+  }, [prefetchAlbumPhotos]);
 
   useEffect(() => {
     const el = audioRef.current;
@@ -453,7 +465,7 @@ export default function App() {
           <div className="invite__album">
             {albumPhotos.map((src, index) => (
               <figure key={src} className="invite__albumFig">
-                <img src={src} alt={`Ảnh cưới ${index + 1}`} loading="lazy" decoding="async" />
+                <img src={src} alt={`Ảnh cưới ${index + 1}`} loading="eager" decoding="async" />
               </figure>
             ))}
           </div>
