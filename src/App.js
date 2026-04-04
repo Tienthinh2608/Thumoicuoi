@@ -13,20 +13,11 @@ const WEDDING_ALBUM_SRCS = Array.from({ length: 8 }, (_, i) => {
   return `${process.env.PUBLIC_URL}/Anh/Anhcuoi${n}.jpg`;
 });
 
-// function shuffleInPlace(arr) {
-//   const a = [...arr];
-//   for (let i = a.length - 1; i > 0; i -= 1) {
-//     const j = Math.floor(Math.random() * (i + 1));
-//     [a[i], a[j]] = [a[j], a[i]];
-//   }
-//   return a;
-// }
-
 /** Chỉnh nội dung thiệp tại đây */
 const INVITE = {
   coupleTitle: 'Lan Anh & Tự Chinh',
   /** Ảnh hero (file gốc `Anh/Anhcuoicung.jpg`) */
-  heroPhoto: `${process.env.PUBLIC_URL}/Anh/Anhcuoicung.jpg`,
+  heroPhoto: `${process.env.PUBLIC_URL}/Anh/1.jpg`,
   heroTime: '12',
   heroDay: '04',
   heroMonth: '04',
