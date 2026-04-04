@@ -92,8 +92,8 @@ const INVITE = {
   /** Ảnh nền khối CTA dưới album (`public/Anh/`) */
   ctaPhoto: `${process.env.PUBLIC_URL}/Anh/Anhcuoicung.jpg`,
   /**
-   * Nhạc nền thiệp: Mixkit «Wedding Music» (Arulo) — miễn phí theo Mixkit License.
-   * File: `public/nhac/wedding-background.mp3` — https://mixkit.co/free-stock-music/download/272/
+   * Nhạc nền thiệp (~1m55): Mixkit «Wedding Song» (Arulo) — hip hop / relaxed, không lời.
+   * Miễn phí theo Mixkit License — https://mixkit.co/free-stock-music/download/323/
    */
   musicSrc: `${process.env.PUBLIC_URL}/nhac/wedding-background.mp3`,
 };
