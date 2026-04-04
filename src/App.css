@@ -1392,6 +1392,38 @@
   font-weight: 700;
 }
 
+.invite__modalFooterBtns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.invite__modalSend {
+  width: 100%;
+  padding: 0.72rem;
+  border-radius: 14px;
+  border: 2px solid rgba(194, 24, 91, 0.38);
+  background: var(--white);
+  color: var(--pink-deep);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s var(--ease);
+}
+
+.invite__modalSend:hover {
+  border-color: var(--pink-deep);
+  background: var(--pink-soft);
+  transform: translateY(-1px);
+}
+
+.invite__modalSend:focus-visible {
+  outline: 2px solid var(--pink-mid);
+  outline-offset: 2px;
+}
+
 .invite__bankLine {
   font-size: 0.95rem;
   font-weight: 600;
@@ -1460,6 +1492,7 @@
   .invite__ctaBtn,
   .invite__sendNow,
   .invite__rsvpBtn,
+  .invite__modalSend,
   .invite__modalClose,
   .invite__modalBackdrop,
   .invite__modal {

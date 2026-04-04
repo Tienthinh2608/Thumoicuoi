@@ -513,9 +513,14 @@ export default function App() {
                 Không Thể Tham Dự
               </button>
             </div>
-            <button type="button" className="invite__modalClose" onClick={closeRsvp}>
-              Đóng
-            </button>
+            <div className="invite__modalFooterBtns">
+              <button type="button" className="invite__modalSend" onClick={closeRsvp}>
+                Gửi
+              </button>
+              <button type="button" className="invite__modalClose" onClick={closeRsvp}>
+                Đóng
+              </button>
+            </div>
           </div>
         </div>
       )}
